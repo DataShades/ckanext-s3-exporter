@@ -1,0 +1,14 @@
+# s3_exporter-js:
+#   filter: rjsmin
+#   output: ckanext-s3_exporter/%(version)s-s3_exporter.js
+#   contents:
+#     - js/s3_exporter.js
+#   extra:
+#     preload:
+#       - base/main
+
+# s3_exporter-css:
+#   filter: cssrewrite
+#   output: ckanext-s3_exporter/%(version)s-s3_exporter.css
+#   contents:
+#     - css/s3_exporter.css
