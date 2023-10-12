@@ -4,18 +4,19 @@ from typing import Any
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-from ckan.types import Context
+
+from ckanext.s3_exporter import cli, views
+from ckanext.s3_exporter.logic import action, auth, validators
 
 
-@toolkit.blanket.cli
-@toolkit.blanket.config_declarations
-@toolkit.blanket.blueprints
-@toolkit.blanket.validators
-@toolkit.blanket.auth_functions
-@toolkit.blanket.actions
 class S3ExporterPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IPackageController, inherit=True)
+    plugins.implements(plugins.IClick)
+    plugins.implements(plugins.IValidators)
+    plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IBlueprint)
 
     # IConfigurer
 
@@ -26,7 +27,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
 
     # IPackageController
 
-    def after_dataset_update(self, context: Context, pkg_dict: dict[str, Any]) -> None:
+    def after_update(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
         if context.get("_s3_exported"):
             return
 
@@ -34,10 +35,35 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
             context, {"package_id": pkg_dict["id"]}
         )
 
-    def after_dataset_create(self, context: Context, pkg_dict: dict[str, Any]) -> None:
+    def after_create(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
         if context.get("_s3_exported"):
             return
 
         toolkit.get_action("update_s3_extracted_resources")(
             {"ignore_auth": True}, {"package_id": pkg_dict["id"]}
         )
+
+    # IClick
+
+    def get_commands(self):
+        return cli.get_commands()
+
+    # IValidators
+
+    def get_validators(self):
+        return validators.get_validators()
+
+    # IActions
+
+    def get_actions(self):
+        return action.get_actions()
+
+    # IAuthFuntion
+
+    def get_auth_functions(self):
+        return auth.get_auth_functions()
+
+    # IBlueprint
+
+    def get_blueprint(self):
+        return views.get_blueprints()

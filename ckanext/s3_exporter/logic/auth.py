@@ -1,9 +1,13 @@
 from __future__ import annotations
 
-from ckan import types
+from typing import Any
 
 
 def update_s3_extracted_resources(
-    context: types.Context, data_dict: types.DataDict
-) -> types.AuthResult:
+    context: dict[str, Any], data_dict: dict[str, Any]
+) -> dict[str, bool]:
     return {"success": False}
+
+
+def get_auth_functions():
+    return {"update_s3_extracted_resources": update_s3_extracted_resources}

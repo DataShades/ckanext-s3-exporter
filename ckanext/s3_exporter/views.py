@@ -2,8 +2,8 @@ import boto3
 import ckan.plugins.toolkit as tk
 from flask import Blueprint
 
-from ckanext.s3_exporter.utils import get_exported_resources
 from ckanext.s3_exporter.const import S3E_DOWNLOAD
+from ckanext.s3_exporter.utils import get_exported_resources
 
 s3_exporter = Blueprint("s3_exporter", __name__)
 

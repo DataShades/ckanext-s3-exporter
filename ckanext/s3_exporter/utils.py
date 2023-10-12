@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import Any, cast
+from typing import Any
 
 import boto3
 import ckan.plugins.toolkit as tk
-from ckan import types
 
 from ckanext.s3_exporter.const import FLAKE_EXPORTED, S3E_DOWNLOAD
 
@@ -18,8 +17,7 @@ def run_s3_export(pkg_dict: dict[str, Any]):
     """Run an export of resources from s3 bucket and add them into the specific
     package"""
     logger.info(f"Starting s3 re-export for package: {pkg_dict['id']}")
-
-    context = cast(types.Context, {"ignore_auth": True, "_s3_exported": True})
+    context = {"ignore_auth": True, "_s3_exported": True}
     s3_folder = pkg_dict["s3_exporter_object_key"]
     package_id = pkg_dict["id"]
 

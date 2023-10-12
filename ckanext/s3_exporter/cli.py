@@ -6,7 +6,6 @@ import boto3
 import ckan.plugins.toolkit as tk
 import click
 
-
 logger = logging.getLogger(__name__)
 
 __all__ = ["s3_exporter"]
@@ -20,7 +19,7 @@ def s3_exporter():
 @s3_exporter.command()
 @click.argument("package_id", required=False)
 def update(package_id: str):
-    """Update resources from the s3 bucket"""
+    """Update resources exported from the s3 bucket"""
 
     result = tk.get_action("package_search")(
         {"ignore_auth": True},
@@ -31,7 +30,7 @@ def update(package_id: str):
     )
 
     if not result["count"]:
-        return click.secho("No datasets")
+        return click.secho("No datasets with s3 object key found")
 
     for package_dict in result["results"]:
         tk.get_action("update_s3_extracted_resources")(
@@ -78,3 +77,7 @@ def remove_file(file_path: str):
     session.client("s3").delete_object(
         Bucket=tk.config["ckanext.s3_exporter.bucket_name"], Key=file_path
     )
+
+
+def get_commands():
+    return [s3_exporter]
