@@ -8,4 +8,4 @@ presets:
       label: S3 object key
       form_placeholder: The path to the folder from which the resources will be exported
       help_text: An object key in format "folder/nested/". Set to "/" to use the bucket root directory.
-      validators: scheming_required unicode_safe is_valid_s3_filepath
+      validators: ignore_empty unicode_safe is_valid_s3_filepath

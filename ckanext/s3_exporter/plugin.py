@@ -28,7 +28,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
     # IPackageController
 
     def after_update(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
-        if context.get("_s3_exported"):
+        if context.get("_s3_exported") or not pkg_dict.get("s3_exporter_object_key"):
             return
 
         toolkit.get_action("update_s3_extracted_resources")(
@@ -36,7 +36,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
         )
 
     def after_create(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
-        if context.get("_s3_exported"):
+        if context.get("_s3_exported") or not pkg_dict.get("s3_exporter_object_key"):
             return
 
         toolkit.get_action("update_s3_extracted_resources")(

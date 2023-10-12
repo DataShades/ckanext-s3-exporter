@@ -21,6 +21,9 @@ def update_s3_extracted_resources(context, data_dict):
 
     pkg_dict = tk.get_action("package_show")(context, {"id": data_dict["package_id"]})
 
+    if not pkg_dict.get("s3_exporter_object_key"):
+        return {}
+
     if data_dict.get("async", True):
         return _enqueue_export_job(pkg_dict)
 
