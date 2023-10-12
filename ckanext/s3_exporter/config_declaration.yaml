@@ -1,0 +1,19 @@
+version: 1
+groups:
+  - annotation: ckanext-s3_exporter
+    options:
+      - key: ckanext.s3_exporter.access_key
+        description: Publicly known and shared identifier that is used to identify the AWS account when making requests to Amazon S3
+        required: true
+
+      - key: ckanext.s3_exporter.secret_key
+        description: Secret key that is used to authenticate and authorize requests made using the Access Key ID
+        required: true
+
+      - key: ckanext.s3_exporter.bucket_name
+        description: A container name that is used for storing data and objects in AWS
+        required: true
+
+      - key: ckanext.s3_exporter.queue_name
+        description: Specify to which queue the export job will be added
+        required: false

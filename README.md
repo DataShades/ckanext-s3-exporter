@@ -1,72 +1,36 @@
-[![Tests](https://github.com/DataShades/ckanext-s3-exporter/workflows/Tests/badge.svg?branch=main)](https://github.com/DataShades/ckanext-s3-exporter/actions)
+[![Tests](https://github.com/DataShades/ckanext-s3-exporter/actions/workflows/test.yml/badge.svg)](https://github.com/DataShades/ckanext-s3-exporter/actions/workflows/test.yml)
 
 # ckanext-s3-exporter
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
-
+Creates a dataset resources from files uploaded to AWS s3 bucket.
 
 ## Requirements
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
-
-If your extension works across different versions you can add the following table:
-
 Compatibility with core CKAN versions:
 
-| CKAN version    | Compatible?   |
-| --------------- | ------------- |
-| 2.6 and earlier | not tested    |
-| 2.7             | not tested    |
-| 2.8             | not tested    |
-| 2.9             | not tested    |
-
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
-
+| CKAN version    | Compatible? |
+| --------------- | ----------- |
+| 2.9 and earlier | no          |
+| 2.10+           | yes         |
 
 ## Installation
 
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
+Use `pypi` or install from source. Refer to CKAN documentation to know how to install an extension from source.
 
-To install ckanext-s3-exporter:
-
-1. Activate your CKAN virtual environment, for example:
-
-     . /usr/lib/ckan/default/bin/activate
-
-2. Clone the source and install it on the virtualenv
-
-    git clone https://github.com/DataShades/ckanext-s3-exporter.git
-    cd ckanext-s3-exporter
-    pip install -e .
-	pip install -r requirements.txt
-
-3. Add `s3-exporter` to the `ckan.plugins` setting in your CKAN
-   config file (by default the config file is located at
-   `/etc/ckan/default/ckan.ini`).
-
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
-
-     sudo service apache2 reload
-
+**TODO**: upload to pypi
 
 ## Config settings
 
-None at present
+List of available config options:
 
-**TODO:** Document any optional config settings here. For example:
-
-	# The minimum number of hours to wait before re-checking a resource
-	# (optional, default: 24).
-	ckanext.s3_exporter.some_setting = some_default_value
-
+1. Publicly known and shared identifier that is used to identify the AWS account when making requests to Amazon S3
+   * `ckanext.s3_exporter.access_key = xxx`
+2. Secret key that is used to authenticate and authorize requests made using the Access Key ID
+   * `ckanext.s3_exporter.secret_key`
+3. A container name that is used for storing data and objects in AWS
+   * `ckanext.s3_exporter.bucket_name`
+4. Specify to which queue the export job will be added. Will be added to default queue if not specified.
+   * `ckanext.s3_exporter.queue_name`
 
 ## Developer installation
 
@@ -78,45 +42,11 @@ do:
     python setup.py develop
     pip install -r dev-requirements.txt
 
-
 ## Tests
 
 To run the tests, do:
 
     pytest --ckan-ini=test.ini
-
-
-## Releasing a new version of ckanext-s3-exporter
-
-If ckanext-s3-exporter should be available on PyPI you can follow these steps to publish a new version:
-
-1. Update the version number in the `setup.py` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
-
-2. Make sure you have the latest version of necessary packages:
-
-    pip install --upgrade setuptools wheel twine
-
-3. Create a source and binary distributions of the new version:
-
-       python setup.py sdist bdist_wheel && twine check dist/*
-
-   Fix any errors you get.
-
-4. Upload the source distribution to PyPI:
-
-       twine upload dist/*
-
-5. Commit any outstanding changes:
-
-       git commit -a
-       git push
-
-6. Tag the new release of the project on GitHub with the version number from
-   the `setup.py` file. For example if the version number in `setup.py` is
-   0.0.1 then do:
-
-       git tag 0.0.1
-       git push --tags
 
 ## License
 
