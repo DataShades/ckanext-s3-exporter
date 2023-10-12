@@ -20,7 +20,7 @@ def run_s3_export(pkg_dict: dict[str, Any]):
     logger.info(f"Starting s3 re-export for package: {pkg_dict['id']}")
     context = {
         "ignore_auth": True,
-        "user": tk.g.user,
+        "user": "",
         "model": model,
         "_s3_exported": True,
     }
