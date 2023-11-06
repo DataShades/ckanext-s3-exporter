@@ -27,7 +27,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
 
     # IPackageController
 
-    def after_update(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
+    def after_dataset_update(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
         if context.get("_s3_exported") or not pkg_dict.get("s3_exporter_object_key"):
             return
 
@@ -35,7 +35,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
             context, {"package_id": pkg_dict["id"]}
         )
 
-    def after_create(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
+    def after_dataset_create(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
         if context.get("_s3_exported") or not pkg_dict.get("s3_exporter_object_key"):
             return
 
