@@ -32,7 +32,7 @@ class S3ExporterPlugin(plugins.SingletonPlugin):
             return
 
         toolkit.get_action("update_s3_extracted_resources")(
-            context, {"package_id": pkg_dict["id"]}
+            dict(context, ignore_auth=True), {"package_id": pkg_dict["id"]}
         )
 
     def after_dataset_create(self, context: dict[str, Any], pkg_dict: dict[str, Any]) -> None:
